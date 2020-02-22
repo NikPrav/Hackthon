@@ -1,9 +1,9 @@
  
 // Make sure you update the following three values. Don't change any other part of the code, unless you know what your're doing.
 // Refer to https://github.com/alialavia/ZabivakaBot to learn how to use this code.
-var botToken = "969907856:AAHpk1EQxvfmmIL4yrjDe0uuhAIQoy6Uewc"; 
-var ssId = "10xWFH6s7cOKTXNz0oPpMeYzYNETA9iQZk5VhnkqGnVU";
-var webAppUrl = "https://script.google.com/macros/s/AKfycbxZY2XDAc9BrizN3ci7F-biWXiIglFGFyrzh7HcsW66tB-G4F_4/exec";
+var botToken = "639684432:AAGFF-ahVnV6eB9vQLQYby_faEQIN77PMZ4"; 
+var ssId = "1LNOnQAfCUiCpcOhEAbbGfTxDm0P_6ILxgZdl4hmTf98";
+var webAppUrl = "https://script.google.com/a/iith.ac.in/macros/s/AKfycbyOEYZppS66BYAO-mrw5Vz_CdKpJZGKtyeWsZiL1qeHLKS9jHPj/exec";
 
 var telegramUrl = "https://api.telegram.org/bot" + botToken;
 
@@ -115,8 +115,6 @@ function TaxisonSameDate(date){
 
 }
 
-
-
 function stateUpdated(id, state) {
   switch (state) {
     case null:
@@ -125,20 +123,23 @@ function stateUpdated(id, state) {
       sendText(id, showHelp());
       break;
     case "/list":
-      sendText(id, "Hell");
+      sendText(id, "Hello");
       break;
     case "/register":
       sendText(id,"Enter your date of departure:");
-      
-      
+      Logger.log("123");
+    
+    case "/see":
+      sendText(id,"Enter your date of departure:");
+
     default:
       // Other states are one of these three forms: /IranMorroco, /IranMorroco,1 , /IranMorroco,1,4
       var stateParts = state.split(",");
       var stateId = stateParts.length;
-      var game = findGame(stateParts[0]);
-      if (game == null) // Bad state => Clear the state and return
-        setState(id, null);
-      else
+//      var game = findGame(stateParts[0]);
+//      if (game == null) // Bad state => Clear the state and return
+//        setState(id, null);
+//      else
       {
         switch (stateId)
         {
