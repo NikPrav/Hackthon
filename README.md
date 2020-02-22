@@ -20,13 +20,13 @@ A bot in Telegram that can ease the cabsharing process, using google sheets as a
 6. Perform step 4 one more time. Again, **make sure you have the `Who has access to the app` set as `Anyone, even anonymous`, and `Project version` to `New`**.
 
 ## Built With
-1.Google's code editor
+1.Google's app script. 
 2.Google Sheet API
 ## Authors
 
 * **Akhil George Thomas** - [AkhilGeoThom](https://github.com/akhilgeothom)
-* **Mukkavalli Bharat Chandra** -
 * **Nikhil P** - [NikhilPraveen](https://github.com/NikhilPraveen)
+* **Mukkavalli Bharat Chandra** 
 
 ## License
 
