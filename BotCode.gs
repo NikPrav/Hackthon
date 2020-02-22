@@ -1,9 +1,9 @@
  
 // Make sure you update the following three values. Don't change any other part of the code, unless you know what your're doing.
 // Refer to https://github.com/alialavia/ZabivakaBot to learn how to use this code.
-var botToken = "969907856:AAHpk1EQxvfmmIL4yrjDe0uuhAIQoy6Uewc"; 
+var botToken = "998867708:AAFCGqc1gaR7291pg0wN_7ybee_tYHpmQ_k"; 
 var ssId = "10xWFH6s7cOKTXNz0oPpMeYzYNETA9iQZk5VhnkqGnVU";
-var webAppUrl = "https://script.google.com/macros/s/AKfycbxZY2XDAc9BrizN3ci7F-biWXiIglFGFyrzh7HcsW66tB-G4F_4/exec";
+var webAppUrl = "https://script.google.com/macros/s/AKfycbwE90FV2FW4bw2TCCKFNApLGN6-itP2ITmbYuuTGJ4SicsyEgo/exec";
 
 var telegramUrl = "https://api.telegram.org/bot" + botToken;
 
@@ -44,27 +44,18 @@ function sheetToArray(sheetName)
 
 function listOfTaxisAvailable()
 {
- return sheetToArray("ActiveGames");
+ return sheetToArray("taxiList");
 }
 
 function showListOfTaxisAvailable()
 {
-  var games = listOfTaxisAvailable()
+  //sendText(id,"DEBUG:Reading..");
+  var games = listOfTaxisAvailable();
+//  sendText(id,"DEBUG:Reading....");
   s = ""
   for (var i in listOfTaxisAvailable())
     s += games[i].join(" ") + '\n';
   return s;
-}
-
-function findGame(command) {
-  var rows = listOfTaxisAvailable();
-  for (i in rows)
-  {
-    var gameData = rows[i];
-    if (gameData[0] == command)
-      return { command: gameData[0], team1: gameData[1], team2: gameData[2] };
-  }
-  return null;
 }
 
 
@@ -84,38 +75,63 @@ function setState(id, newState)
 
 /* MAIN */
 function showHelp() {
-  return "Send /list to see a list of active games.";
+  return "Try /see to see all available taxis v2.";
 }
 
-function FilteredsheetToArray(sheetName,filterfield,filter)
-{
- var sheet = SpreadsheetApp.openById(ssId).getSheetByName(sheetName);
- try {
-   return sheet.getRange(2, 1, sheet.getLastRow(), 5).getValues();
- }
- catch (e) {  return [[]]; }
-}
+//function FilteredsheetToArray(sheetName,filterfield,filter)
+//{
+// var sheet = SpreadsheetApp.openById(ssId).getSheetByName(sheetName);
+// try {
+//   return sheet.getRange(2, 1, sheet.getLastRow(), 5).getValues();
+// }
+// catch (e) {  return [[]]; }
+//}
 
-/*function showListOfTaxisonSameDate()
-{
-  var taxi = listOfTaxisAvailable()
-  s = ""
-  for (var i in listOfTaxisAvailable())
-    s += games[i].join(" ") + '\n';
-  return s;
-}*/
+//function findGame(command) {
+//  var rows = listOfTaxisAvailable();
+//  for (i in rows)
+//  {
+//    var gameData = rows[i];
+//    if (gameData[0] == command)
+//      return { command: gameData[0], team1: gameData[1], team2: gameData[2] };
+//  }
+//  return null;
+//}
 
-function TaxisonSameDate(date){
-  var taxi = FilteredsheettoArray("ActiveGames","date",date)
+
+
+
+function showListOfTaxisonSameDate(id,date)
+{
+//  var taxi = listOfTaxisAvailable()
   s = ""
-  for (var i in FilteredsheettoArray("ActiveGames","none","none")){
-    s += taxi[i].join(" ") + '\n';
+//  sendText(id,"DEBUG:"+date)
+//  sendText(id,"DEBUG:This thing")
+  var rows = listOfTaxisAvailable();
+  
+  for (i in rows)
+  {
+//    sendText(id,"DEBUG:and this thing")
+    var TaxiData = rows[i];
+//    sendText(id,"DEBUG:"+TaxiData[0])
+    if (TaxiData[0] == date && TaxiData[7] == "nyb" )
+    {      
+//      sendText(id,"DEBUG:Its True")
+    s += TaxiData.join(" ") + '\n';
+    }
   }
   return s;
-
 }
 
+//function TaxisonSameDate(date){
+//  var taxi = FilteredsheettoArray("taxiList","date",date)findGame
+//  s = ""
+//  for (var i in FilteredsheettoArray("taxiList","none","none")){
+//    s += taxi[i].join(" ") + '\n';
+//  }
+//  return s;
 
+//}
 
 function stateUpdated(id, state) {
   switch (state) {
@@ -125,37 +141,65 @@ function stateUpdated(id, state) {
       sendText(id, showHelp());
       break;
     case "/list":
-      sendText(id, "Hell");
+      sendText(id, "Hello");
       break;
     case "/register":
       sendText(id,"Enter your date of departure:");
-      
-      
+//      Logger.log("123");
+      break;
+    case "/see":
+      sendText(id,"Enter date of departure like 25thFeb:");
+      break;
     default:
-      // Other states are one of these three forms: /IranMorroco, /IranMorroco,1 , /IranMorroco,1,4
+      // Other states are one of these forms: /see, /see,1 , /see,1,4
       var stateParts = state.split(",");
       var stateId = stateParts.length;
-      var game = findGame(stateParts[0]);
-      if (game == null) // Bad state => Clear the state and return
-        setState(id, null);
-      else
+//      var game = findGame(stateParts[0]);
+//      if (game == null) // Bad state => Clear the state and return
+//        setState(id, null);
+//      else
+      sendText(id, "DEBUG:" + state);
+      sendText(id, "D2:" + stateParts[0]);
+      sendText(id, "D3:" + stateId);
+      
+      if(stateParts[0] == "/register")
+      {
+        if(stateId ==1){
+          sendText(id, "Enter date of departure like 25thFeb");
+        }
+        else if(stateId ==2){
+          sendText(id, showListOfTaxisAvailable());
+          sendText(id, "Enter the slot no.");
+        }
+        else if(stateId ==3){
+          SpreadsheetApp.openById(ssId).getSheets()[0].appendRow([new Date(),id, documentProperties.getProperty("name_" + id)].concat(stateParts));
+          sendText(id, "Your entry has been registered.");
+          setState(id, null);
+        }
+
+      }
+      else if(stateParts[0] == "/see")
       {
         switch (stateId)
         {
-          case 1:
-            sendText(id, "Enter date of departure like if 25/02/2020 => 2502:");
-          break;
+//          case 1:
+//            sendText(id, "Enter date of departure like if 25/02/2020 => 2502:");
+//            break;
           case 2:
-            sendText(id, showListOfTaxisAvailable());
-            sendText(id, "Enter the slot no.");
-          break;
-          case 3:
-            sendText(id, "Your entry has been registered.");
-            SpreadsheetApp.openById(ssId).getSheets()[0].appendRow([new Date(),id, documentProperties.getProperty("name_" + id)].concat(stateParts));
-            setState(id, null);
-          break;
+            var s= showListOfTaxisonSameDate(id,stateParts[1])
+            if(s != null)
+            {  
+              sendText(id, "Here are the list of available taxis on the same day:");
+              sendText(id, s);
+            }
+              else
+              sendText(id,"No Taxis are available" );
+            //sendText(id, "qwe");
+            break;
+          
         }
       }
+      
   }
 }
 
