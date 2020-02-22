@@ -1,9 +1,9 @@
  
 // Make sure you update the following three values. Don't change any other part of the code, unless you know what your're doing.
 // Refer to https://github.com/alialavia/ZabivakaBot to learn how to use this code.
-var botToken = "969907856:AAHpk1EQxvfmmIL4yrjDe0uuhAIQoy6Uewc"; 
-var ssId = "10xWFH6s7cOKTXNz0oPpMeYzYNETA9iQZk5VhnkqGnVU";
-var webAppUrl = "https://script.google.com/macros/s/AKfycbxZY2XDAc9BrizN3ci7F-biWXiIglFGFyrzh7HcsW66tB-G4F_4/exec";
+var botToken = "639684432:AAGFF-ahVnV6eB9vQLQYby_faEQIN77PMZ4"; 
+var ssId = "1LNOnQAfCUiCpcOhEAbbGfTxDm0P_6ILxgZdl4hmTf98";
+var webAppUrl = "https://script.google.com/a/iith.ac.in/macros/s/AKfycbyOEYZppS66BYAO-mrw5Vz_CdKpJZGKtyeWsZiL1qeHLKS9jHPj/exec";
 
 var telegramUrl = "https://api.telegram.org/bot" + botToken;
 
@@ -44,7 +44,7 @@ function sheetToArray(sheetName)
 
 function listOfTaxisAvailable()
 {
- return sheetToArray("ActiveGames");
+ return sheetToArray("taxiList");
 }
 
 function showListOfTaxisAvailable()
@@ -106,16 +106,14 @@ function FilteredsheetToArray(sheetName,filterfield,filter)
 }*/
 
 function TaxisonSameDate(date){
-  var taxi = FilteredsheettoArray("ActiveGames","date",date)
+  var taxi = FilteredsheettoArray("taxiList","date",date)
   s = ""
-  for (var i in FilteredsheettoArray("ActiveGames","none","none")){
+  for (var i in FilteredsheettoArray("taxiList","none","none")){
     s += taxi[i].join(" ") + '\n';
   }
   return s;
 
 }
-
-
 
 function stateUpdated(id, state) {
   switch (state) {
@@ -125,37 +123,59 @@ function stateUpdated(id, state) {
       sendText(id, showHelp());
       break;
     case "/list":
-      sendText(id, "Hell");
+      sendText(id, "Hello");
       break;
     case "/register":
       sendText(id,"Enter your date of departure:");
-      
-      
+//      Logger.log("123");
+      break;
+    case "/see":
+      sendText(id,"Enter your date of departure:");
+      break;
     default:
       // Other states are one of these three forms: /IranMorroco, /IranMorroco,1 , /IranMorroco,1,4
       var stateParts = state.split(",");
       var stateId = stateParts.length;
-      var game = findGame(stateParts[0]);
-      if (game == null) // Bad state => Clear the state and return
-        setState(id, null);
-      else
+//      var game = findGame(stateParts[0]);
+//      if (game == null) // Bad state => Clear the state and return
+//        setState(id, null);
+//      else
+      sendText(id, "DEBUG:" + state);
+      sendText(id, "D2:" + stateParts[0]);
+      sendText(id, "D3:" + stateId);
+      
+      if(stateParts[0] == "/register")
+      {
+        if(stateId ==1){
+          sendText(id, "Enter date of departure like if 25/02/2020 => 2502:");
+        }
+        else if(stateId ==2){
+          sendText(id, showListOfTaxisAvailable());
+          sendText(id, "Enter the slot no.");
+        }
+        else if(stateId ==3){
+          SpreadsheetApp.openById(ssId).getSheets()[0].appendRow([new Date(),id, documentProperties.getProperty("name_" + id)].concat(stateParts));
+          sendText(id, "Your entry has been registered.");
+          setState(id, null);
+        }
+
+      }
+      else if(stateParts[0] == "/see")
       {
         switch (stateId)
         {
           case 1:
             sendText(id, "Enter date of departure like if 25/02/2020 => 2502:");
-          break;
+            break;
           case 2:
+            sendText(id, "Here are the list of available taxis:");
             sendText(id, showListOfTaxisAvailable());
-            sendText(id, "Enter the slot no.");
-          break;
-          case 3:
-            sendText(id, "Your entry has been registered.");
-            SpreadsheetApp.openById(ssId).getSheets()[0].appendRow([new Date(),id, documentProperties.getProperty("name_" + id)].concat(stateParts));
-            setState(id, null);
-          break;
+            sendText(id, "qwe");
+            break;
+          
         }
       }
+      
   }
 }
 
