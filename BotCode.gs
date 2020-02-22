@@ -1,4 +1,3 @@
-  
 var botToken = "Bot_Token"; 
 var ssId = "SSID";
 var webAppUrl = "WEB_APP_URL";
@@ -143,12 +142,30 @@ function stateUpdated(id, state) {
           sendText(id, "Enter date of departure like 25thFeb");
         }
         else if(stateId ==2){
-          sendText(id, showListOfTaxisAvailable());
+          var available = showListOfTaxisonSameDate(id,stateParts[1]);
+          if(available != ""){
+            sendText(id, "The following taxis are already booked on that date");
+            sendText(id, available);
+          }
+          
           sendText(id, "Enter the slot no.");
         }
         else if(stateId ==3){
-          SpreadsheetApp.openById(ssId).getSheets()[0].appendRow([new Date(),id, documentProperties.getProperty("name_" + id)].concat(stateParts));
-          sendText(id, "Your entry has been registered.");
+          sendText(id, "From?");
+        }
+        else if(stateId ==4){
+          sendText(id, "To?");
+        }
+        else if(stateId ==5){
+          sendText(id, "RollNo.?");
+        }
+        else if(stateId ==6){
+          sendText(id, "Phone Number?");
+        }
+        else if(stateId ==7){
+          
+          SpreadsheetApp.openById(ssId).getSheets()[0].appendRow([stateParts[1],stateParts[2],documentProperties.getProperty("name_" + id),stateParts[3],stateParts[4],stateParts[5],stateParts[6],"nyb"]);
+          sendText(id,"Your entry has been registered");
           setState(id, null);
         }
 
@@ -168,7 +185,7 @@ function stateUpdated(id, state) {
             }
               else
               sendText(id,"No Taxis are available" );
-            //sendText(id, "qwe");
+//          sendText(id, "qwe");
             break;
           
         }
