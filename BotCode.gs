@@ -1,9 +1,7 @@
   
-// Make sure you update the following three values. Don't change any other part of the code, unless you know what your're doing.
-// Refer to https://github.com/alialavia/ZabivakaBot to learn how to use this code.
-var botToken = "998867708:AAFCGqc1gaR7291pg0wN_7ybee_tYHpmQ_k"; 
-var ssId = "10xWFH6s7cOKTXNz0oPpMeYzYNETA9iQZk5VhnkqGnVU";
-var webAppUrl = "https://script.google.com/macros/s/AKfycbwE90FV2FW4bw2TCCKFNApLGN6-itP2ITmbYuuTGJ4SicsyEgo/exec";
+var botToken = "Bot_Token"; 
+var ssId = "SSID";
+var webAppUrl = "WEB_APP_URL";
 
 var telegramUrl = "https://api.telegram.org/bot" + botToken;
 
