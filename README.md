@@ -25,7 +25,7 @@ A bot in Telegram that can ease the cabsharing process, using google sheets as a
 ## Authors
 
 * **Akhil George Thomas** - [AkhilGeoThom](https://github.com/akhilgeothom)
-* **Mukkavalli Bharat Chandra** - [PurpleBooth](https://github.com/PurpleBooth)
+* **Mukkavalli Bharat Chandra** -
 * **Nikhil P** - [NikhilPraveen](https://github.com/NikhilPraveen)
 
 ## License
