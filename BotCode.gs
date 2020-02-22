@@ -1,4 +1,4 @@
- 
+  
 // Make sure you update the following three values. Don't change any other part of the code, unless you know what your're doing.
 // Refer to https://github.com/alialavia/ZabivakaBot to learn how to use this code.
 var botToken = "998867708:AAFCGqc1gaR7291pg0wN_7ybee_tYHpmQ_k"; 
@@ -50,11 +50,11 @@ function listOfTaxisAvailable()
 function showListOfTaxisAvailable()
 {
   //sendText(id,"DEBUG:Reading..");
-  var games = listOfTaxisAvailable();
+  var taxi = listOfTaxisAvailable();
 //  sendText(id,"DEBUG:Reading....");
   s = ""
   for (var i in listOfTaxisAvailable())
-    s += games[i].join(" ") + '\n';
+    s += taxi[i].join(" ") + '\n';
   return s;
 }
 
@@ -87,18 +87,6 @@ function showHelp() {
 // catch (e) {  return [[]]; }
 //}
 
-//function findGame(command) {
-//  var rows = listOfTaxisAvailable();
-//  for (i in rows)
-//  {
-//    var gameData = rows[i];
-//    if (gameData[0] == command)
-//      return { command: gameData[0], team1: gameData[1], team2: gameData[2] };
-//  }
-//  return null;
-//}
-
-
 
 
 function showListOfTaxisonSameDate(id,date)
@@ -123,15 +111,6 @@ function showListOfTaxisonSameDate(id,date)
   return s;
 }
 
-//function TaxisonSameDate(date){
-//  var taxi = FilteredsheettoArray("taxiList","date",date)findGame
-//  s = ""
-//  for (var i in FilteredsheettoArray("taxiList","none","none")){
-//    s += taxi[i].join(" ") + '\n';
-//  }
-//  return s;
-
-//}
 
 function stateUpdated(id, state) {
   switch (state) {
@@ -151,16 +130,14 @@ function stateUpdated(id, state) {
       sendText(id,"Enter date of departure like 25thFeb:");
       break;
     default:
-      // Other states are one of these forms: /see, /see,1 , /see,1,4
+      // Other states are one of these forms: /see, /see,25thFeb , /see,1,4
       var stateParts = state.split(",");
       var stateId = stateParts.length;
-//      var game = findGame(stateParts[0]);
-//      if (game == null) // Bad state => Clear the state and return
-//        setState(id, null);
-//      else
-      sendText(id, "DEBUG:" + state);
-      sendText(id, "D2:" + stateParts[0]);
-      sendText(id, "D3:" + stateId);
+
+
+//      sendText(id, "DEBUG:" + state);
+//      sendText(id, "D2:" + stateParts[0]);
+//      sendText(id, "D3:" + stateId);
       
       if(stateParts[0] == "/register")
       {
@@ -182,12 +159,11 @@ function stateUpdated(id, state) {
       {
         switch (stateId)
         {
-//          case 1:
-//            sendText(id, "Enter date of departure like if 25/02/2020 => 2502:");
-//            break;
+
           case 2:
             var s= showListOfTaxisonSameDate(id,stateParts[1])
-            if(s != null)
+//            sendText(id,"DEBUG:" + s);
+            if(s != "")
             {  
               sendText(id, "Here are the list of available taxis on the same day:");
               sendText(id, s);
